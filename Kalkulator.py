@@ -1,3 +1,4 @@
+import functools
 import sys
 
 from PyQt5.QtGui import QFont
@@ -13,75 +14,62 @@ class MyWindow(QWidget):
     def initUI(self):
         self.setGeometry(0, 0, 900, 900)
         self.setFixedSize(450, 450)
+        self.setWindowTitle('Przyciski 0-9')
 
-    # 0,0 0,1 0,2
-    # 1,0 1,1 1,2
-    # 2,0 2,1 2,2
-    # 3,0 2,1 2,2
+    # 0,0 0,1 0,2 | 7 8 9
+    # 1,0 1,1 1,2 | 4 5 6
+    # 2,0 2,1 2,2 | 1 2 3
+    # 3,0 2,1 2,2 |   0
 
-        #buttonNumber = 0
-
-        #for i in range(0, 3, 1):
-            #for j in range(0, 3, 1):
 
         gridLayout = QGridLayout(self)
-        #tmpName = 'button'+str(buttonNumber)
-        button0 = QPushButton('0', self)
-        button0.setFixedHeight(80)
-        button0.setFont(QFont('Segoe', 40, QFont.Bold))
 
-        button1 = QPushButton('1', self)
-        button1.setFixedHeight(80)
-        button1.setFont(QFont('Segoe', 40, QFont.Bold))
+        for i in range(0, 10, 1):
 
-        button2 = QPushButton('2', self)
-        button2.setFixedHeight(80)
-        button2.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button3 = QPushButton('3', self)
-        button3.setFixedHeight(80)
-        button3.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button4 = QPushButton('4', self)
-        button4.setFixedHeight(80)
-        button4.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button5 = QPushButton('5', self)
-        button5.setFixedHeight(80)
-        button5.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button6 = QPushButton('6', self)
-        button6.setFixedHeight(80)
-        button6.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button7 = QPushButton('7', self)
-        button7.setFixedHeight(80)
-        button7.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button8 = QPushButton('8', self)
-        button8.setFixedHeight(80)
-        button8.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        button9 = QPushButton('9', self)
-        button9.setFixedHeight(80)
-        button9.setFont(QFont('Segoe', 40, QFont.Bold))
-
-        gridLayout.addWidget(button9, 0, 2)
-        gridLayout.addWidget(button8, 0, 1)
-        gridLayout.addWidget(button7, 0, 0)
-        gridLayout.addWidget(button6, 1, 2)
-        gridLayout.addWidget(button5, 1, 1)
-        gridLayout.addWidget(button4, 1, 0)
-        gridLayout.addWidget(button3, 2, 2)
-        gridLayout.addWidget(button2, 2, 1)
-        gridLayout.addWidget(button1, 2, 0)
-        gridLayout.addWidget(button0, 3, 0, 1, 3)
-
-
-        #buttonNumber = buttonNumber + 1
+            self.btn = QPushButton(str(i), self)
+            self.btn.setFixedHeight(100)
+            self.btn.setFont(QFont('Segoe', 40, QFont.Bold))
+            if i == 0:
+                gridLayout.addWidget(self.btn, 3, 0, 1, 3)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '0'))
+            if i == 1:
+                gridLayout.addWidget(self.btn, 2, 0)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '1'))
+            if i == 2:
+                gridLayout.addWidget(self.btn, 2, 1)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '2'))
+            if i == 3:
+                gridLayout.addWidget(self.btn, 2, 2)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '3'))
+            if i == 4:
+                gridLayout.addWidget(self.btn, 1, 0)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '4'))
+            if i == 5:
+                gridLayout.addWidget(self.btn, 1, 1)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '5'))
+            if i == 6:
+                gridLayout.addWidget(self.btn, 1, 2)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '6'))
+            if i == 7:
+                gridLayout.addWidget(self.btn, 0, 0)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '7'))
+            if i == 8:
+                gridLayout.addWidget(self.btn, 0, 1)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '8'))
+            if i == 9:
+                gridLayout.addWidget(self.btn, 0, 2)
+                self.btn.clicked.connect(functools.partial(self.showMsgBox, '9'))
 
         self.show()
 
+
+    def showMsgBox(self, i):
+        msg = QMessageBox()
+        msg.setText('Button '+i)
+        msg.setWindowTitle('Message Box')
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
 
 def main():
     app = QApplication(sys.argv)
